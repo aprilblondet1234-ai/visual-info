@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>How Far Is Too Far?</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f1e8;
+        color: #252525;
+    }
+
+    .container {
+        max-width: 1050px;
+        margin: auto;
+        padding: 50px 25px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-size: 1.15rem;
+        color: #555;
+        max-width: 700px;
+        margin: auto;
+        line-height: 1.6;
+    }
+
+    .toggle {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 35px 0;
+    }
+
+    .toggle button {
+        border: 2px solid #252525;
+        background: transparent;
+        padding: 12px 28px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 30px;
+        transition: 0.25s;
+    }
+
+    .toggle button.active {
+        background: #252525;
+        color: white;
+    }
+
+    #question {
+        text-align: center;
+        font-size: 1.7rem;
+        margin-bottom: 30px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: transform 0.2s;
+        min-height: 250px;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .icon {
+        font-size: 2.5rem;
+    }
+
+    .card h2 {
+        margin-bottom: 10px;
+    }
+
+    .dilemma {
+        font-weight: bold;
+        line-height: 1.5;
+    }
+
+    .details {
+        display: none;
+        margin-top: 18px;
+        border-top: 1px solid #ddd;
+        padding-top: 15px;
+        line-height: 1.5;
+    }
+
+    .card.open .details {
+        display: block;
+    }
+
+    .instruction {
+        font-size: .85rem;
+        color: #777;
+        margin-top: 20px;
+    }
+
+    .takeaway {
+        background: #252525;
+        color: white;
+        margin-top: 45px;
+        padding: 30px;
+        border-radius: 16px;
+        text-align: center;
+    }
+
+    .takeaway h2 {
+        margin-top: 0;
+    }
+
+    .takeaway p {
+        line-height: 1.6;
+        font-size: 1.1rem;
+    }
+
+    @media(max-width: 750px) {
+        .cards {
+            grid-template-columns: 1fr;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>How Far Is Too Far?</h1>
+
+    <p class="subtitle">
+        Technology has always created new possibilities — and new problems.
+        Explore how technological dilemmas have changed from the past to our
+        current moment.
+    </p>
+</header>
+
+<div class="toggle">
+    <button id="thenButton" class="active" onclick="showThen()">THEN</button>
+    <button id="nowButton" onclick="showNow()">NOW</button>
+</div>
+
+<h2 id="question">How far CAN we go?</h2>
+
+<div class="cards" id="cards"></div>
+
+<div class="takeaway">
+    <h2>The Dilemma That Hasn't Changed</h2>
+
+    <p>
+        How do we gain the benefits of technological advancement while
+        containing its potential consequences?
+    </p>
+
+    <p>
+        As technology becomes more powerful and widespread, society must
+        continually decide not only what we can create, but what limits
+        should exist once we create it.
+    </p>
+</div>
+
+</div>
+
+<script>
+
+const thenTech = [
+    {
+        icon: "🖨️",
+        name: "Printing Press",
+        dilemma: "Spread knowledge ↔ Lose control over information",
+        benefit: "Printed material could be reproduced faster and reach much larger audiences.",
+        risk: "Authorities had less control over which ideas circulated and who could encounter them."
+    },
+
+    {
+        icon: "⚙️",
+        name: "Industrial Machinery",
+        dilemma: "Increase production ↔ Displace workers",
+        benefit: "Machines increased the speed and scale at which goods could be produced.",
+        risk: "Mechanization threatened existing jobs and transformed traditional forms of labor."
+    },
+
+    {
+        icon: "☢️",
+        name: "Nuclear Technology",
+        dilemma: "Gain extraordinary power ↔ Create extraordinary destruction",
+        benefit: "Nuclear science created new technological and strategic capabilities.",
+        risk: "Nuclear weapons demonstrated that technological advancement could also create catastrophic consequences."
+    }
+];
+
+const nowTech = [
+    {
+        icon: "🤖",
+        name: "Artificial Intelligence",
+        dilemma: "Increase capabilities ↔ Lose control over how AI is used",
+        benefit: "AI can assist with communication, research, creativity, and complex tasks.",
+        risk: "Its rapid spread raises concerns about misinformation, employment, misuse, and how much control humans will maintain."
+    },
+
+    {
+        icon: "🧑‍💻",
+        name: "Automation",
+        dilemma: "Increase efficiency ↔ Replace human labor",
+        benefit: "Automation can complete repetitive tasks faster and increase productivity.",
+        risk: "As machines become capable of more tasks, some forms of human employment may disappear or fundamentally change."
+    },
+
+    {
+        icon: "🧬",
+        name: "Gene Editing",
+        dilemma: "Treat disease ↔ Alter human biology",
+        benefit: "Gene-editing technologies may help researchers understand or treat genetic diseases.",
+        risk: "The ability to alter genes raises questions about safety, ethics, and where limits should be placed."
+    }
+];
+
+function createCards(data) {
+
+    const cards = document.getElementById("cards");
+    cards.innerHTML = "";
+
+    data.forEach(item => {
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="icon">${item.icon}</div>
+
+            <h2>${item.name}</h2>
+
+            <p class="dilemma">${item.dilemma}</p>
+
+            <p class="instruction">Click to explore the dilemma</p>
+
+            <div class="details">
+                <p><strong>Benefit:</strong> ${item.benefit}</p>
+                <p><strong>Risk:</strong> ${item.risk}</p>
+            </div>
+        `;
+
+        card.onclick = () => {
+            card.classList.toggle("open");
+        };
+
+        cards.appendChild(card);
+    });
+}
+
+function showThen() {
+
+    document.getElementById("question").textContent =
+        "How far CAN we go?";
+
+    document.getElementById("thenButton").classList.add("active");
+    document.getElementById("nowButton").classList.remove("active");
+
+    createCards(thenTech);
+}
+
+function showNow() {
+
+    document.getElementById("question").textContent =
+        "How far SHOULD we go?";
+
+    document.getElementById("nowButton").classList.add("active");
+    document.getElementById("thenButton").classList.remove("active");
+
+    createCards(nowTech);
+}
+
+createCards(thenTech);
+
+</script>
+
+</body>
+</html>
